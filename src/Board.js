@@ -141,13 +141,58 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMajorDiagonalConflictAt: function(colIndex) { //majorDiagonalColumnIndexAtFirstRow
+
+      var getRC = function(iCol){
+        if(iCol > -1){
+          return [0, iCol];
+        } else{
+          return [Math.abs(iCol), 0];
+        }
+      }
+
+      var checkDiagonal = function(row,col){
+        var sum = 0;
+
+        for(var i=0; ;i++){
+          //get element
+          var curRow = this.get(row+i);
+
+          if(rcItem === undefined){
+            if(sum > 1){
+              return true;
+            } else {
+              return false;
+            }
+          }
+
+          var rcItem = curRow[col+i];
+
+
+          sum += rcItem;
+        }
+      }
+
+      var rc = getRC.call(this, colIndex);
+      console.log(rc);
+      return checkDiagonal.call(this, rc);
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var len = this.get(0).length; // len = 4
+      var start = -(len - 1);
+      var end = len;
+
+      console.log('ALL');
+      for (var i=start; i<end-1; i++){
+        var isConflict = this.hasMajorDiagonalConflictAt(i);
+        if (isConflict){
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
@@ -169,6 +214,7 @@
 
 
   });
+
 
   var makeEmptyMatrix = function(n) {
     return _(_.range(n)).map(function() {
