@@ -56,11 +56,15 @@ describe("Board", function() {
   });
 
   describe("Board with minor diagonal conflicts", function() {
+    console.log('START MAJOR ****************************************************');
+
     verifyConflictTypes(['minorDiagonal', 'queens'], [
       [0, 0, 1, 0],
       [0, 0, 0, 0],
       [1, 0, 0, 0],
       [0, 0, 0, 0]
     ]);
+    console.log('END MAJOR ####################################################');
+
   });
 });
