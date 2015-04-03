@@ -14,7 +14,10 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = [];
+
+
+
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -24,7 +27,53 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+
+  //var board = new Board({n: n});
+  var board = new Board({n: n});
+
+  var rookCheck = function(board, row){
+    console.log('rookCheckStart row=', row);
+
+
+    for(var column = 0; column <= n-1 ; column++){
+      console.log('rc',[row, column]);
+      // toggle element
+      board.togglePiece(row, column);
+
+
+    console.log('*******************');
+    for (var i=0; i<board.get(0).length; i++){
+      console.log(board.get(i));
+    }
+
+
+      // run col check
+      if(board.hasColConflictAt(column)){
+        board.togglePiece(row, column);
+        //possible continue here
+      } else {
+        row++;
+        console.log("row:"+row);
+        if (row >= n && board.hasColConflictAt(column) === false) {
+          solutionCount++;
+          console.log("sol:" + solutionCount);
+          //row-=2;
+          break;
+          //possibly need to break here
+        } else {
+          //if(row === n)
+          console.log('rowPRE', row);
+          rookCheck(board, row);
+          row -= 1;
+          board.togglePiece(row, column);
+          // all rows below current row blank out; bug fix
+
+        }
+      }
+    }
+  };
+  rookCheck(board,0);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;

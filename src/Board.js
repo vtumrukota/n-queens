@@ -226,7 +226,7 @@
       }
       var rc = getRC.call(this, colIndex);
       var ret = checkDiagonal.call(this, rc[0], rc[1]);
-      console.log(rc, this.get(rc[0])[rc[1]], ret);
+      //console.log(rc, this.get(rc[0])[rc[1]], ret);
       return ret;
     },
 
